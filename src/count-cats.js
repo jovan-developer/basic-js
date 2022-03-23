@@ -25,12 +25,6 @@ function countCats(arr) {
   return result;
 }
 
-countCats([
-  ["^^", 1, "^^"],
-  [0, "^^", 2],
-  ["^^", 1, 2],
-]);
-
 module.exports = {
   countCats,
 };
