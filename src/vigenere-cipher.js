@@ -96,19 +96,6 @@ class VigenereCipheringMachine {
   }
 }
 
-const directMachine = new VigenereCipheringMachine();
-const reverseMachine = new VigenereCipheringMachine(false);
-// //  const reverseMachine = new VigenereCipheringMachine(false);
-// console.log(directMachine.encrypt("attack at dawn!", "alphonse"));
-// console.log(reverseMachine.encrypt("attack at dawn!", "alphonse"));
-// console.log(directMachine.decrypt("AEIHQX SX DLLU!", "alphonse"));
-console.log(reverseMachine.decrypt("AEIHQX SX DLLU!", "alphonse"));
-// /=> '!NWAD TA KCATTA'
-// => 'ATTACK AT DAWN!');
-// directMachine.encrypt("she is listening", "pascal");
-// directMachine.encrypt("aza", "twq");
-//  => 'AEIHQX SX DLLU!'
-
 module.exports = {
   VigenereCipheringMachine,
 };
