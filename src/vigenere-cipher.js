@@ -19,16 +19,95 @@ const { NotImplementedError } = require("../extensions/index.js");
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  *
  */
+
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+  constructor(mod = true) {
+    this.alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+    this.mod = mod;
   }
-  decrypt() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+    if (message !== undefined && key !== undefined) {
+      let result = "";
+      let msg = message.toLowerCase().split("");
+      let k = key.toLowerCase().split("");
+      let idx = 0;
+
+      for (let i = 0; i < msg.length; i++) {
+        if (idx >= k.length) {
+          idx = 0;
+        }
+
+        const el = this.alphabet.indexOf(msg[i]);
+
+        if (el === -1) {
+          result += msg[i];
+        } else {
+          const keyValue = this.alphabet.indexOf(k[idx]);
+          const val = keyValue + el;
+          let resultIdx = 0;
+          if (val > 0) {
+            resultIdx = val % 26;
+          }
+
+          console.log(el, keyValue, resultIdx, this.alphabet[resultIdx]);
+          result += this.alphabet[resultIdx];
+          idx++;
+        }
+      }
+      result = result.toUpperCase();
+      return this.mod ? result : result.split("").reverse("").join("");
+    } else {
+      throw new Error("Incorrect arguments!");
+    }
+  }
+  decrypt(message, key) {
+    if (message !== undefined && key !== undefined) {
+      let result = "";
+      let msg = message.toLowerCase().split("");
+      let k = key.toLowerCase().split("");
+      let idx = 0;
+
+      for (let i = 0; i < msg.length; i++) {
+        if (idx >= k.length) {
+          idx = 0;
+        }
+
+        const el = this.alphabet.indexOf(msg[i]);
+
+        if (el === -1) {
+          result += msg[i];
+        } else {
+          const keyValue = this.alphabet.indexOf(k[idx]);
+          const val = (el - keyValue) % 26;
+          let resultIdx = 0;
+          resultIdx = val > 0 ? val : (val + 26) % 26;
+
+          console.log(el, keyValue, resultIdx, this.alphabet[resultIdx]);
+          result += this.alphabet[resultIdx];
+          idx++;
+        }
+      }
+      result = result.toUpperCase();
+      return this.mod ? result : result.split("").reverse("").join("");
+    } else {
+      throw new Error("Incorrect arguments!");
+    }
   }
 }
+
+const directMachine = new VigenereCipheringMachine();
+const reverseMachine = new VigenereCipheringMachine(false);
+// //  const reverseMachine = new VigenereCipheringMachine(false);
+// console.log(directMachine.encrypt("attack at dawn!", "alphonse"));
+// console.log(reverseMachine.encrypt("attack at dawn!", "alphonse"));
+// console.log(directMachine.decrypt("AEIHQX SX DLLU!", "alphonse"));
+console.log(reverseMachine.decrypt("AEIHQX SX DLLU!", "alphonse"));
+// /=> '!NWAD TA KCATTA'
+// => 'ATTACK AT DAWN!');
+// directMachine.encrypt("she is listening", "pascal");
+// directMachine.encrypt("aza", "twq");
+//  => 'AEIHQX SX DLLU!'
 
 module.exports = {
   VigenereCipheringMachine,
